@@ -31,6 +31,9 @@
 *.DS_Store
 
 # ignore files (likely datasets or graphics) if too large (> 100 MB)
+data/degrees-that-pay-back.csv
+data/salaries-by-college-type.csv
+data/salaries-by-region.csv
 # specify pathway to dataset data/project_dataset.csv
 # if all datasets are too large then use data/*.csv (only ignores CSVs)
 # if you have other file types then use appropriate extension data/*.rds
