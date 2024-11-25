@@ -34,6 +34,11 @@
 data/degrees-that-pay-back.csv
 data/salaries-by-college-type.csv
 data/salaries-by-region.csv
+data/Most-Recent-Cohorts-Field-of-Study.csv
+
+# Ignore specific file in the raw subdirectory
+data/raw/Most-Recent-Cohorts-Field-of-Study.csv
+
 # specify pathway to dataset data/project_dataset.csv
 # if all datasets are too large then use data/*.csv (only ignores CSVs)
 # if you have other file types then use appropriate extension data/*.rds
