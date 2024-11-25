@@ -132,6 +132,8 @@ knitr::kable(
 
 This table shows starting salaries by school type. Ivy League schools have the highest starting salaries, followed by Engineering schools. Liberal Arts, Party, and State schools have lower starting salaries on average.
 
+![Earnings Growth Over Time by Institution Type](plots/earnings_growth_by_institution_type.png)
+
 
 ![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
 This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs.
@@ -142,8 +144,6 @@ This bar chart shows the differences in median salaries across fields of study t
 ```{r}
 # load data
 library(tidyverse)
-library(ggplot2)
-library(dplyr)
 library(gridExtra)
 library(kableExtra)
 
@@ -198,6 +198,54 @@ knitr::kable(
 ```
 
 The table below presents the top 15 institutions ranked by median salaries for bachelor’s degree holders. It includes a yearly breakdown of earnings from the first to the third year after graduation.
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+
+# load data
+field_of_study_data <- read_csv("data/Most-Recent-Cohorts-Field-of-Study.csv")
+
+# check columns are numeric
+field_of_study_data <- field_of_study_data |>
+  mutate(
+    EARN_NE_MDN_3YR = as.numeric(ifelse(EARN_NE_MDN_3YR == "PS", NA, EARN_NE_MDN_3YR)),
+    EARN_MDN_HI_1YR = as.numeric(ifelse(EARN_MDN_HI_1YR == "PS", NA, EARN_MDN_HI_1YR)),
+    EARN_MDN_HI_2YR = as.numeric(ifelse(EARN_MDN_HI_2YR == "PS", NA, EARN_MDN_HI_2YR)),
+    DEBT_ALL_STGP_ANY_MDN = as.numeric(DEBT_ALL_STGP_ANY_MDN) 
+  )
+
+# filter for bachelor's degrees 
+bachelors_data <- field_of_study_data |>
+  filter(CREDLEV == 3, !is.na(EARN_NE_MDN_3YR), !is.na(DEBT_ALL_STGP_ANY_MDN))
+
+# calculate ROI 
+bachelors_roi <- bachelors_data |>
+  group_by(INSTNM) |>
+  summarize(
+    Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE),  
+    Median_Debt = median(DEBT_ALL_STGP_ANY_MDN, na.rm = TRUE),     
+    ROI = Median_Earnings_3YR - Median_Debt                   
+  ) |>
+  arrange(desc(ROI))  # Sort by ROI in descending order
+
+# top 10 schools by ROI
+top_bachelors_roi <- bachelors_roi |>
+  slice_head(n = 10)
+
+# HTML table f
+kable(
+  top_bachelors_roi,
+  format = "html",
+  col.names = c("Institution", "Median Earnings (3rd Year)", "Median Debt", "ROI ($)"),
+  caption = "Top Schools for Return of Investment on Bachelor's Degrees"
+) |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+```
+
+
+
 
 ## Potential data issues
 

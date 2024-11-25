@@ -114,12 +114,12 @@ dev.off()
 
 #### Median Earnings by Credential Level ----
 
-# replace "PS" with "NA" and convert to numeric
+# replace "PS" with "NA" 
 field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# filter relevant credential levels (Bachelor's, Master's, Doctorate)
+# filter relevant credential levels 
 filtered_field_of_study <- field_of_study_data |>
   filter(CREDLEV %in% c(3, 5, 6))  # Numeric codes for relevant levels
 
@@ -143,7 +143,7 @@ median_earnings <- ggplot(aggregated_data, aes(x = CREDLEV, y = Mean_Earnings, f
     y = "Median Earnings"
   ) +
   theme_minimal() +
-  theme(legend.position = "none")  # Hide the legend if not needed
+  theme(legend.position = "none")  
 
 print(median_earnings)
 
@@ -152,7 +152,7 @@ ggsave("plots/median_earnings_by_credential.png", width = 8, height = 6)
 
 
 #### Median Debt vs. Median Earnings ----
-# replace "PS" with "NA" and convert to numeric for Debt and Earnings
+# replace "PS" with "NA" 
 field_of_study_data$DEBT_ALL_STGP_ANY_MDN <- as.numeric(
   ifelse(field_of_study_data$DEBT_ALL_STGP_ANY_MDN == "PS", NA, field_of_study_data$DEBT_ALL_STGP_ANY_MDN)
 )
@@ -160,7 +160,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# filtered data to remove rows with NA values in relevant columns
+# remove rows with NA values 
 filtered_field_of_study <- field_of_study_data |>
   filter(!is.na(DEBT_ALL_STGP_ANY_MDN), !is.na(EARN_NE_MDN_3YR))
 
@@ -198,12 +198,12 @@ med_earnings_vs_med_debt_bar <- ggplot(debt_earnings_summary, aes(x = Debt_Range
 print(med_earnings_vs_med_debt_bar)
 
 #### Median Salary by Field of Study ----
-# replace "PS" with "NA" and convert Earnings to numeric
+# replace "PS" with "NA" 
 field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# filterd data to remove rows with missing values
+# remove rows with missing values
 filtered_field_of_study <- field_of_study_data |>
   filter(!is.na(EARN_NE_MDN_3YR))
 
@@ -237,7 +237,7 @@ ggsave("plots/median_salary_by_field_of_study.png", width = 8, height = 6)
 
 
 #### Top 15 Institutions by Median Salary (3 Years After Graduation) ----
-# replace "PS" with "NA" and convert Earnings to numeric
+# replace "PS" with "NA" 
 field_of_study_data$EARN_MDN_HI_1YR <- as.numeric(
   ifelse(field_of_study_data$EARN_MDN_HI_1YR == "PS", NA, field_of_study_data$EARN_MDN_HI_1YR)
 )
@@ -248,7 +248,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# filtered data for bachelor's degrees and remove missing values
+# filtered data for bachelor's
 filtered_field_of_study <- field_of_study_data |>
   filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
 
@@ -260,7 +260,7 @@ bachelor_institution_salary_summary <- filtered_field_of_study |>
     Median_Earnings_2YR = median(EARN_MDN_HI_2YR, na.rm = TRUE),
     Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE)
   ) |>
-  arrange(desc(Median_Earnings_3YR))  # Sort by third-year median earnings in descending order
+  arrange(desc(Median_Earnings_3YR))  
 
 # top 15 institutions
 top_bachelor_institutions <- bachelor_institution_salary_summary |>
@@ -268,5 +268,86 @@ top_bachelor_institutions <- bachelor_institution_salary_summary |>
 
 print(bachelor_institution_salary_summary)
 
+#### Earnings Growth Over Time by Institution Type ----
+# joining datasets 
+filtered_field_of_study_with_type <- filtered_field_of_study |>
+  left_join(salaries_by_college, by = c("INSTNM" = "School Name"))
 
+# filter out NA values 
+filtered_field_of_study_with_type <- filtered_field_of_study_with_type |>
+  filter(!is.na(`School Type`))
+
+# school type grouping
+school_type_growth <- filtered_field_of_study_with_type |>
+  group_by(`School Type`) |>
+  summarize(
+    Avg_Earnings_1YR = mean(EARN_MDN_HI_1YR, na.rm = TRUE),
+    Avg_Earnings_2YR = mean(EARN_MDN_HI_2YR, na.rm = TRUE),
+    Avg_Earnings_3YR = mean(EARN_NE_MDN_3YR, na.rm = TRUE)
+  )
+
+school_type_growth_long <- school_type_growth |>
+  pivot_longer(cols = starts_with("Avg_Earnings"), 
+               names_to = "Year", 
+               values_to = "Earnings") |>
+  mutate(Year = case_when(
+    Year == "Avg_Earnings_1YR" ~ 1,
+    Year == "Avg_Earnings_2YR" ~ 2,
+    Year == "Avg_Earnings_3YR" ~ 3
+  ))
+
+# line plot
+earnings_growth_by_institution_type <- ggplot(
+  school_type_growth_long, 
+  aes(x = Year, y = Earnings, color = `School Type`)) +
+  geom_line(size = 1.5) +  
+  geom_point(size = 3) +  
+  scale_color_manual(
+    values = c(
+      "Engineering" = "lightslateblue",
+      "Ivy League" = "purple3",
+      "Liberal Arts" = "lightskyblue",
+      "Party" = "blue2",
+      "State" = "royalblue"
+    )
+  ) +
+  scale_x_continuous(breaks = c(1, 2, 3), labels = c("1 Year", "2 Years", "3 Years")) +  
+  scale_y_continuous(labels = scales::dollar_format()) +  
+  labs(
+    title = "Earnings Growth Over Time by Institution Type",
+    x = "Years After Graduation",
+    y = "Median Earnings ($)",
+    color = "Institution Type"
+  ) +
+  theme_minimal()
+
+# save plot
+ggsave("plots/earnings_growth_by_institution_type.png", width = 10, height = 7)
+
+
+#### Top Schools for Return of Investment on Bachelor's Degrees ----
+bachelors_data <- filtered_field_of_study_with_type |>
+  filter(CREDLEV == 3)
+
+# calculate ROI 
+bachelors_roi <- bachelors_data |>
+  group_by(INSTNM) |>
+  summarize(
+    Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE),  
+    Median_Debt = median(DEBT_ALL_STGP_ANY_MDN, na.rm = TRUE),     
+    ROI = Median_Earnings_3YR - Median_Debt                   
+  ) |>
+  arrange(desc(ROI))
+
+# top 10 schools
+top_bachelors_roi <- bachelors_roi |>
+  slice_head(n = 10)
+
+kable(
+  top_bachelors_roi,
+  format = "html",
+  col.names = c("Institution", "Median Earnings (3rd Year)", "Median Debt", "ROI ($)"),
+  caption = "Top Schools for Return of Investment on Bachelor's Degrees"
+) |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
