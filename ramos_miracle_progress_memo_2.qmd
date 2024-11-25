@@ -16,7 +16,9 @@ format:
     link-external-newwindow: true
 
 execute:
-  warning: false
+  echo: false       
+  warning: false  
+  error: false  
 
 from: markdown+emoji
 reference-location: margin
@@ -36,9 +38,9 @@ citation-location: margin
 
 ## Data source
 
-Analysis of College Salaries and Earning Potential
+#### Analysis of College Salaries and Earning Potential
 
-The data for this project was sourced from Kaggle, specifically the 'College Salaries' dataset provided by the Wall Street Journal (WSJ). This dataset can be accessed at [Kaggle](https://www.kaggle.com/datasets/wsj/college-salaries) and was downloaded on November 3, 2024.
+This dataset was sourced from Kaggle, specifically the 'College Salaries' dataset provided by the Wall Street Journal (WSJ). This dataset can be accessed at [Kaggle](https://www.kaggle.com/datasets/wsj/college-salaries) and was downloaded on November 3, 2024.
 
 - Degrees That Pay You Back: This dataset contains starting and mid-career salaries for various undergraduate majors.
 
@@ -48,15 +50,21 @@ The data for this project was sourced from Kaggle, specifically the 'College Sal
 
 - Salaries by Region: This dataset includes salary information categorized by region and school, including starting and mid-career salaries.
 
+#### Analysis of Most Recent Data by Field of Study
+
+This dataset was sourced from College Scorecard, specifically the "Most Recent Cohorts Field of Study" dataset provided by the U.S. Department of Education. This dataset can be accessed at [College Scorecard: U.S. Department of Education](https://collegescorecard.ed.gov/data) and was downloaded on November 24, 2024.
+
+- This dataset offers detailed information on student debt and earnings by field of study, making it a valuable resource for analyzing post-graduation financial outcomes.
+
 ## Why this data
 
-I chose this data because it offers valuable insights into how college types, regions, and specific majors impact starting and mid-career salaries. I'm interested in this topic because it has real world importance for career choices and education planning. My main questions for this analysis are:
+I chose the datasets from Kaggle and College Scorecard because they offer different but related insights into education and earnings. The Kaggle dataset highlights starting and mid-career salaries, showing how majors and college types impact earnings over time. The College Scorecard dataset focuses on earnings by field of study and institution, giving a detailed look at specific programs and schools. Together, these datasets provide a well-rounded view of educational value. 
 
-- How do starting and mid-career salaries differ across various types of colleges?
-- Which regions show the highest salary growth over time?
-- Which majors lead to the greatest salary growth 10 years after graduation?
+Key questions for this analysis include:
 
-These questions come from my own desire to better understand how educational choices influence long-term earning potential and career growth.
+- How do earnings change from the first to the third year after graduation?
+- Which institutions and fields of study have the highest median earnings within three years of graduation?
+- How does the earning potential of bachelor’s degrees compare to other credentials?
 
 ## Data quality & complexity check
 
@@ -86,10 +94,110 @@ This bar chart compares salary growth for different majors. Philosophy, Internat
 
 
 
-![Average Starting Salary Table](plots/avg_starting_salary_table.png)
+```{r}
+# load packags
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(kableExtra)
+
+
+# load Kaggle dataset 
+degrees_that_pay_back <- read_csv("data/degrees-that-pay-back.csv")
+salaries_by_college <- read_csv("data/salaries-by-college-type.csv")
+salaries_by_region <- read_csv("data/salaries-by-region.csv")
+
+# convert the "Starting Median Salary" column to numeric
+salaries_by_college$`Starting Median Salary` <- as.numeric(
+  gsub("[\\$,]", "", salaries_by_college$`Starting Median Salary`)
+)
+
+# calculate the average starting salary by school type
+salaries_summary_table <- salaries_by_college |>
+  group_by(`School Type`) |>
+  summarise(Avg_Starting_Salary = mean(`Starting Median Salary`, na.rm = TRUE)) |>
+  arrange(desc(Avg_Starting_Salary))
+
+# table using knitr::kable
+knitr::kable(
+  salaries_summary_table,
+  format = "html",  # Generate an HTML table
+  col.names = c("School Type", "Average Starting Salary ($)"),
+  caption = "Average Starting Median Salary by School Type"
+)
+
+```
+
 
 This table shows starting salaries by school type. Ivy League schools have the highest starting salaries, followed by Engineering schools. Liberal Arts, Party, and State schools have lower starting salaries on average.
 
+
+![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
+This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs.
+
+![Median Salary by Field of Study (3 Years After Graduation)](plots/median_salary_by_field_of_study.png)
+This bar chart shows the differences in median salaries across fields of study three years after graduation, highlighting trends by discipline.
+
+```{r}
+# load data
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(kableExtra)
+
+# load College Scorecard dataset
+field_of_study_data <- read_csv("data/Most-Recent-Cohorts-Field-of-Study.csv")
+
+### Filtered Data ----
+# filter the relevant columns
+filtered_field_of_study <- field_of_study_data |>
+  select(CIPDESC, CREDLEV, DEBT_ALL_STGP_ANY_MDN, DEBT_ALL_STGP_EVAL_MDN,
+         EARN_MDN_HI_1YR, EARN_MDN_HI_2YR, EARN_NE_MDN_3YR,
+         EARN_COUNT_WNE_HI_1YR, EARN_GT_THRESHOLD_1YR, EARN_IN_STATE_1YR,
+         EARN_MALE_NE_MDN_3YR, EARN_NOMALE_NE_MDN_3YR, 
+         EARN_PELL_NE_MDN_3YR, EARN_NOPELL_NE_MDN_3YR)
+
+# Replace "PS" with NA and convert Earnings to numeric
+field_of_study_data$EARN_MDN_HI_1YR <- as.numeric(
+  ifelse(field_of_study_data$EARN_MDN_HI_1YR == "PS", NA, field_of_study_data$EARN_MDN_HI_1YR)
+)
+field_of_study_data$EARN_MDN_HI_2YR <- as.numeric(
+  ifelse(field_of_study_data$EARN_MDN_HI_2YR == "PS", NA, field_of_study_data$EARN_MDN_HI_2YR)
+)
+field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
+  ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
+)
+
+# Filter data for bachelor's degrees and remove missing values
+filtered_field_of_study <- field_of_study_data |>
+  filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
+
+# Aggregate data: Median Earnings by Institution
+bachelor_institution_salary_summary <- filtered_field_of_study |>
+  group_by(INSTNM) |>
+  summarize(
+    Median_Earnings_1YR = median(EARN_MDN_HI_1YR, na.rm = TRUE),
+    Median_Earnings_2YR = median(EARN_MDN_HI_2YR, na.rm = TRUE),
+    Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE)
+  ) |>
+  arrange(desc(Median_Earnings_3YR))  # Sort by third-year median earnings in descending order
+
+# Limit to top 15 institutions
+top_bachelor_institutions <- bachelor_institution_salary_summary |>
+  slice_head(n = 15)
+
+# Generate the table using knitr::kable
+knitr::kable(
+  top_bachelor_institutions,
+  format = "html",
+  col.names = c("Institution", "Median Earnings (1st Year)", "Median Earnings (2nd Year)", "Median Earnings (3rd Year)"),
+  caption = "Top 15 Institutions by Median Salary With a Bachelor's Degree (1st, 2nd, and 3rd Year After Graduation)"
+)
+```
+
+The table below presents the top 15 institutions ranked by median salaries for bachelor’s degree holders. It includes a yearly breakdown of earnings from the first to the third year after graduation.
 
 ## Potential data issues
 
