@@ -63,7 +63,7 @@ I chose the datasets from Kaggle and College Scorecard because they offer differ
 Key questions for this analysis include:
 
 - How do earnings change from the first to the third year after graduation?
-- Which institutions and fields of study have the highest median earnings within three years of graduation?
+- Which institutions and fields of study have the highest earnings?
 - How does the earning potential of bachelor’s degrees compare to other credentials?
 
 ## Data quality & complexity check
@@ -80,7 +80,7 @@ Overall, the three datasets are clean and ready for analysis, with no missing da
 
 ## Exploratory Data Analysis
 
-#### Average Starting Median Salary by School Type
+#### Average Starting Median Salary by Institution Type
 
 ```{r}
 # load packags
@@ -112,7 +112,7 @@ knitr::kable(
   salaries_summary_table,
   format = "html",  # Generate an HTML table
   col.names = c("School Type", "Average Starting Salary ($)"),
-  caption = "Average Starting Median Salary by School Type"
+  caption = "Average Starting Median Salary by Institution Type"
 )
 
 ```
@@ -124,11 +124,12 @@ This table shows starting salaries by school type. Ivy League schools have the h
 #### Earnings Growth Over Time by Institution Type
 
 ![Earnings Growth Over Time by Institution Type](plots/earnings_growth_by_institution_type.png)
+This graph shows that graduates from Ivy League and engineering institutions experience the highest earnings growth over time, with Ivy League graduates surpassing 75,000 dollars in three years. Graduates from state, party, and liberal arts institutions see slower earnings growth, with median salaries remaining below 60,000 dollars after three years.
 
 #### Median Salary by Field of Study
 
 ![Median Salary by Field of Study (3 Years After Graduation)](plots/median_salary_by_field_of_study.png)
-This bar chart shows the differences in median salaries across fields of study three years after graduation, highlighting trends by discipline.
+This bar chart shows the differences in median salaries across fields of study three years after graduation, highlighting trends by discipline. This graph shows that fields in health sciences, such as dental and medical residency programs, have the highest median earnings three years after graduation. Engineering and technology-related fields also offer competitive salaries but are slightly lower.
 
 #### Average Salary Growth by Undergraduate Major
 
@@ -201,7 +202,7 @@ knitr::kable(
 )
 ```
 
-The table below presents the top 15 institutions ranked by median salaries for bachelor’s degree holders. It includes a yearly breakdown of earnings from the first to the third year after graduation.
+The table presents the top 10 institutions ranked by median salaries for bachelor’s degree holders. It includes a yearly breakdown of earnings from the first to the third year after graduation. According to the data, Harvey Mudd College is the best institution to pursue a bachelors degree to earn a high salary followed by Princeton University.
 
 #### Top Schools for Return of Investment on Bachelor's Degrees
 
@@ -249,11 +250,13 @@ kable(
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
 ```
+This graph shows that Harvey Mudd College offers the best return on investment (ROI) with high earnings and low debt. Schools like MIT and Carnegie Mellon University also rank high because their graduates have low debt. Even smaller schools, like Bismarck State College and Northwestern Michigan College, provide good value, proving you don’t need to attend a big-name university for a strong financial return.
+
 
 #### Median Earnings by Credential Level
 
 ![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
-This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs.
+This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs. From this bar chart, it's evident that Doctorate degrees have the highest median earnings.
 
 
 
@@ -263,13 +266,16 @@ This bar chart compares median earnings across credential levels, highlighting t
 - Inflation and Time Relevance: If the salary data spans different years, it might not be adjusted for inflation, making comparisons over time less accurate.
 - Sample Size Variability: Some categories (such as certain school types or majors) might have a smaller number of observations, leading to less reliable results or potential bias in those areas.
 
+## Progress Summary
+So far, I have loaded and cleaned the datasets, making sure any missing values were addressed and numerical data was formatted correctly. I’ve started exploring the data to look at trends in earnings by school type, field of study, and degree level. I created bar charts and tables to show key insights, like which schools have the highest return on investment (ROI). I also looked at how salaries grow over time, giving a clearer picture of how education affects future earnings.
 
-## Misc
-Future questions to look into:
+## Next Steps
+Moving forward, I plan to dive deeper into demographic breakdowns for the final project.
+Future questions I want to look into include:
 
-- How does the salary growth from starting to mid-career differ between Ivy League, Engineering, Liberal Arts, and State schools?
-- How does the choice of major impact salary growth differently in regions such as the Midwest compared to the Northeast or California?
-- How do salary trends change over time for graduates of specific majors as the job market evolves like the rise of tech jobs?
-- Which majors or schools offer the best return of investment?
+- How does salary differ between students who received financial aid or Pell Grants?
+- How does salary differ between gender?
+- Which majors offer the best return of investment?
+- How does ROI differ between Ivy League, liberal arts, party schools, state schools, and engineering schools?
 
 

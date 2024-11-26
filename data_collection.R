@@ -135,7 +135,7 @@ aggregated_data$CREDLEV <- recode(aggregated_data$CREDLEV,
                                   `6` = "Doctoral Degree")
 
 # median earnings bar plots
-median_earnings <- ggplot(aggregated_data, aes(x = CREDLEV, y = Mean_Earnings, fill = CREDLEV)) +
+median_earnings <- ggplot(aggregated_data, aes(CREDLEV, Mean_Earnings, CREDLEV)) +
   geom_bar(stat = "identity") +
   labs(
     title = "Median Earnings by Credential Level (3 Years After Graduation)",
