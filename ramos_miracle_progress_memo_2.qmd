@@ -78,21 +78,9 @@ The Salaries by Region dataset includes 320 rows and 8 columns. Similar to the c
 
 Overall, the three datasets are clean and ready for analysis, with no missing data to impact further processing. The Degrees That Pay You Back dataset has a mix of categorical and numerical data, which will be useful for comparing salary growth.
 
-Plots and Table of the datasets:
+## Exploratory Data Analysis
 
-
-![Average Mid-Career Salary by Region](plots/avg_mid_career_salary_by_region.png)
-
-This bar chart shows that people who graduate from schools in the Northeastern region tend to have the highest mid-career salaries. California also has good mid-career salaries. The Midwestern and Western regions have lower mid-career averages.
-
-
-
-
-![Average Salary Growth by Undergraduate Major](plots/avg_salary_growth_by_undergrad_major.png)
-
-This bar chart compares salary growth for different majors. Philosophy, International Relations, and Math majors see the biggest salary increases from starting to mid-career. Nursing and Physician Assistant majors have smaller increases, likely because they start with higher salaries that don’t grow as much.
-
-
+#### Average Starting Median Salary by School Type
 
 ```{r}
 # load packags
@@ -132,14 +120,30 @@ knitr::kable(
 
 This table shows starting salaries by school type. Ivy League schools have the highest starting salaries, followed by Engineering schools. Liberal Arts, Party, and State schools have lower starting salaries on average.
 
+
+#### Earnings Growth Over Time by Institution Type
+
 ![Earnings Growth Over Time by Institution Type](plots/earnings_growth_by_institution_type.png)
 
-
-![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
-This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs.
+#### Median Salary by Field of Study
 
 ![Median Salary by Field of Study (3 Years After Graduation)](plots/median_salary_by_field_of_study.png)
 This bar chart shows the differences in median salaries across fields of study three years after graduation, highlighting trends by discipline.
+
+#### Average Salary Growth by Undergraduate Major
+
+![Average Salary Growth by Undergraduate Major](plots/avg_salary_growth_by_undergrad_major.png)
+
+This bar chart compares salary growth for different majors. Philosophy, International Relations, and Math majors see the biggest salary increases from starting to mid-career. Nursing and Physician Assistant majors have smaller increases, likely because they start with higher salaries that don’t grow as much.
+
+#### Average Mid-Career Salary by Region
+
+![Average Mid-Career Salary by Region](plots/avg_mid_career_salary_by_region.png)
+
+This bar chart shows that people who graduate from schools in the Northeastern region tend to have the highest mid-career salaries. California also has good mid-career salaries. The Midwestern and Western regions have lower mid-career averages.
+
+
+#### Top Institutions by Median Salary With a Bachelor's Degree
 
 ```{r}
 # load data
@@ -159,7 +163,7 @@ filtered_field_of_study <- field_of_study_data |>
          EARN_MALE_NE_MDN_3YR, EARN_NOMALE_NE_MDN_3YR, 
          EARN_PELL_NE_MDN_3YR, EARN_NOPELL_NE_MDN_3YR)
 
-# Replace "PS" with NA and convert Earnings to numeric
+# Replace "PS" with "NA" 
 field_of_study_data$EARN_MDN_HI_1YR <- as.numeric(
   ifelse(field_of_study_data$EARN_MDN_HI_1YR == "PS", NA, field_of_study_data$EARN_MDN_HI_1YR)
 )
@@ -170,7 +174,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# Filter data for bachelor's degrees and remove missing values
+# bachelor's degrees
 filtered_field_of_study <- field_of_study_data |>
   filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
 
@@ -182,22 +186,24 @@ bachelor_institution_salary_summary <- filtered_field_of_study |>
     Median_Earnings_2YR = median(EARN_MDN_HI_2YR, na.rm = TRUE),
     Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE)
   ) |>
-  arrange(desc(Median_Earnings_3YR))  # Sort by third-year median earnings in descending order
+  arrange(desc(Median_Earnings_3YR))  
 
-# Limit to top 15 institutions
+# top 10 institutions
 top_bachelor_institutions <- bachelor_institution_salary_summary |>
-  slice_head(n = 15)
+  slice_head(n = 10)
 
-# Generate the table using knitr::kable
+# table 
 knitr::kable(
   top_bachelor_institutions,
   format = "html",
   col.names = c("Institution", "Median Earnings (1st Year)", "Median Earnings (2nd Year)", "Median Earnings (3rd Year)"),
-  caption = "Top 15 Institutions by Median Salary With a Bachelor's Degree (1st, 2nd, and 3rd Year After Graduation)"
+  caption = "Top Institutions by Median Salary With a Bachelor's Degree (1st, 2nd, and 3rd Year After Graduation)"
 )
 ```
 
 The table below presents the top 15 institutions ranked by median salaries for bachelor’s degree holders. It includes a yearly breakdown of earnings from the first to the third year after graduation.
+
+#### Top Schools for Return of Investment on Bachelor's Degrees
 
 ```{r}
 library(tidyverse)
@@ -244,6 +250,10 @@ kable(
 
 ```
 
+#### Median Earnings by Credential Level
+
+![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
+This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs.
 
 
 

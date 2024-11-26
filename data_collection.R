@@ -351,3 +351,12 @@ kable(
 ) |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
+
+
+
+
+
+
+
+
+
