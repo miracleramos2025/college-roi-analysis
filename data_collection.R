@@ -75,7 +75,7 @@ ggplot(salaries_by_region, aes(x = Region, y = `Mid-Career Median Salary`)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_y_continuous(labels = scales::comma)
 
-degrees_that_pay_back <- degrees_that_pay_back %>%
+degrees_that_pay_back <- degrees_that_pay_back |>
   mutate(Salary_Growth = as.numeric(gsub("%", "", `Percent change from Starting to Mid-Career Salary`)))
 
 ggsave("plots/avg_mid_career_salary_by_region.png", width = 8, height = 6)
@@ -121,7 +121,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
 
 # credential levels 
 filtered_field_of_study <- field_of_study_data |>
-  filter(CREDLEV %in% c(3, 5, 6))  # Numeric codes for Bachelor's, Master's, Doctoral
+  filter(CREDLEV %in% c(3, 5, 6))  # numeric codes credentials
 
 # calculate mean earnings
 aggregated_data <- filtered_field_of_study |>
@@ -147,7 +147,8 @@ ggplot(aggregated_data, aes(x = CREDLEV, y = Mean_Earnings, fill = CREDLEV)) +
     x = "Credential Level",
     y = "Median Earnings ($)"
   ) +
-  theme_minimal() 
+  theme_minimal() +
+  theme(legend.position = "none")
 
 ggsave("plots/median_earnings_by_credential.png", width = 8, height = 6)
 
@@ -165,7 +166,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
 filtered_field_of_study <- field_of_study_data |>
   filter(!is.na(DEBT_ALL_STGP_ANY_MDN), !is.na(EARN_NE_MDN_3YR))
 
-# aggregate data by debt ranges 
+# debt ranges 
 debt_earnings_summary <- filtered_field_of_study |>
   mutate(
     Debt_Range = cut(
@@ -183,7 +184,10 @@ debt_earnings_summary <- filtered_field_of_study |>
   )
 
 # bar graph
-med_earnings_vs_med_debt_bar <- ggplot(debt_earnings_summary, aes(x = Debt_Range, y = Mean_Earnings, fill = Debt_Range)) +
+med_earnings_vs_med_debt_bar <- ggplot(debt_earnings_summary, 
+                                       aes(Debt_Range, 
+                                           Mean_Earnings, 
+                                           Debt_Range)) +
   geom_bar(stat = "identity") +
   labs(
     title = "Median Debt vs. Median Earnings (3 Years After Graduation)",
@@ -218,7 +222,10 @@ top_majors <- major_salary_summary |>
   slice_head(n = 25)
 
 # bar graph
-median_salary_by_field_of_study <- ggplot(top_majors, aes(x = reorder(CIPDESC, -Median_Earnings), y = Median_Earnings, fill = Median_Earnings)) +
+median_salary_by_field_of_study <- ggplot(top_majors, 
+                                          aes(reorder(CIPDESC, -Median_Earnings), 
+                                              Median_Earnings, 
+                                              fill = Median_Earnings)) +
   geom_bar(stat = "identity") +
   labs(
     title = "Median Salary by Field of Study (3 Years After Graduation)",
@@ -251,7 +258,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
 
 # filtered data for bachelor's
 filtered_field_of_study <- field_of_study_data |>
-  filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
+  filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  
 
 # median earnings by institution
 bachelor_institution_salary_summary <- filtered_field_of_study |>

@@ -162,7 +162,7 @@ library(kableExtra)
 # load College Scorecard dataset
 field_of_study_data <- read_csv("data/Most-Recent-Cohorts-Field-of-Study.csv")
 
-### Filtered Data ----
+### filtered Data ----
 # filter the relevant columns
 filtered_field_of_study <- field_of_study_data |>
   select(CIPDESC, CREDLEV, DEBT_ALL_STGP_ANY_MDN, DEBT_ALL_STGP_EVAL_MDN,
@@ -171,7 +171,7 @@ filtered_field_of_study <- field_of_study_data |>
          EARN_MALE_NE_MDN_3YR, EARN_NOMALE_NE_MDN_3YR, 
          EARN_PELL_NE_MDN_3YR, EARN_NOPELL_NE_MDN_3YR)
 
-# Replace "PS" with "NA" 
+# replace "PS" with "NA" 
 field_of_study_data$EARN_MDN_HI_1YR <- as.numeric(
   ifelse(field_of_study_data$EARN_MDN_HI_1YR == "PS", NA, field_of_study_data$EARN_MDN_HI_1YR)
 )
@@ -186,7 +186,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
 filtered_field_of_study <- field_of_study_data |>
   filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
 
-# Aggregate data: Median Earnings by Institution
+# median Earnings by Institution
 bachelor_institution_salary_summary <- filtered_field_of_study |>
   group_by(INSTNM) |>
   summarize(
@@ -247,7 +247,7 @@ bachelors_roi <- bachelors_data |>
 top_bachelors_roi <- bachelors_roi |>
   slice_head(n = 10)
 
-# HTML table f
+# HTML table 
 kable(
   top_bachelors_roi,
   format = "html",
