@@ -31,7 +31,7 @@ citation-location: margin
 
 ## Github Repo Link
 
-[Miracle's GitHub Repo Link](https://github.com/stat301-1-2024-fall/final-project-1-miracleramos2025.git)
+[Miracle's GitHub Repo Link (miracleramos2025)](https://github.com/stat301-1-2024-fall/final-project-1-miracleramos2025.git)
 
 :::
 
@@ -70,13 +70,20 @@ Key questions for this analysis include:
 
 The datasets included in this analysis are well-structured, each presenting different levels of complexity:
 
-The Degrees That Pay You Back dataset consists of 50 rows and 8 columns. It primarily contains categorical variables, with 7 out of 8 columns being categorical (example: Undergraduate Major, Percent change from Starting to Mid-Career Salary). Only one column is numerical, specifically the Starting Median Salary. This dataset is complete, with no missing values and a missingness percentage of 0%.
+#### Degrees That Pay You Back 
+This dataset consists of 50 rows and 8 columns. It primarily contains categorical variables, with 7 out of 8 columns being categorical (example: Undergraduate Major, Percent change from Starting to Mid-Career Salary). Only one column is numerical, specifically the Starting Median Salary. This dataset is complete, with no missing values and a missingness percentage of 0%.
 
-The Salaries by College Type dataset contains 269 rows and 8 columns. All columns in this dataset are categorical, such as School Name and School Type, indicating that any numerical analysis may require converting these columns or focusing on categorical comparisons. Like the first dataset, this one is also complete, with no missing values and a 0% missingness percentage.
+#### Salaries by College Type 
+This dataset contains 269 rows and 8 columns. All columns in this dataset are categorical, such as School Name and School Type, indicating that any numerical analysis may require converting these columns or focusing on categorical comparisons. Like the first dataset, this one is also complete, with no missing values and a 0% missingness percentage.
 
-The Salaries by Region dataset includes 320 rows and 8 columns. Similar to the college type dataset, all columns are categorical, with examples including School Name and Region. This dataset has no missing values and a missingness percentage of 0%.
+#### Salaries by Region 
+This dataset includes 320 rows and 8 columns. Similar to the college type dataset, all columns are categorical, with examples including School Name and Region. This dataset has no missing values and a missingness percentage of 0%.
 
-Overall, the three datasets are clean and ready for analysis, with no missing data to impact further processing. The Degrees That Pay You Back dataset has a mix of categorical and numerical data, which will be useful for comparing salary growth.
+#### Most Recent Cohorts Field of Study
+This dataset is much larger than the Kaggle datasets, with thousands of rows and over 1,400 columns. To make it easier to work with, I focused on 14 key columns related to earnings, debt, and fields of study. It includes both categorical and numerical variables. Some columns, like EARN_MDN_HI_1YR, EARN_MDN_HI_2YR, and EARN_NE_MDN_3YR, have missing values marked as "PS" (Privacy Suppressed), which I converted to NA and left out of calculations when needed. The dataset's size and cleaning steps make it more complex to handle.
+
+#### Conclusion 
+Overall, the four datasets are clean and ready for analysis. The Degrees That Pay You Back dataset is straightforward and helpful for comparing salary growth. The Most Recent Cohorts Field of Study dataset is larger and more complex but provides detailed information on earnings, debt, and fields of study. Together, these datasets give a solid base to explore earnings, return on investment, and the value of higher education.
 
 ## Exploratory Data Analysis
 

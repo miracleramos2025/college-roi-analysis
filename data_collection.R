@@ -60,14 +60,14 @@ summaries <- rbind(
 # print the summaries
 print(summaries)
 
-# PLOT
+
 #### Average Mid-Career Salary by Region ----
 salaries_by_region$`Mid-Career Median Salary` <- as.numeric(
   gsub("[\\$,]", "", salaries_by_region$`Mid-Career Median Salary`)
 )
 
 ggplot(salaries_by_region, aes(x = Region, y = `Mid-Career Median Salary`)) +
-  geom_bar(stat = "summary", fun = "mean", fill = "lightgreen") +
+  geom_bar(stat = "summary", fun = "mean", fill = "royalblue") +
   labs(title = "Average Mid-Career Salary by Region",
        x = "Region",
        y = "Mid-Career Median Salary ($)") +
@@ -80,10 +80,10 @@ degrees_that_pay_back <- degrees_that_pay_back %>%
 
 ggsave("plots/avg_mid_career_salary_by_region.png", width = 8, height = 6)
 
-# PLOT
+
 #### Average Salary Growth by Undergraduate Major ----
 ggplot(degrees_that_pay_back, aes(x = reorder(`Undergraduate Major`, -Salary_Growth), y = Salary_Growth)) +
-  geom_bar(stat = "identity", fill = "lightcoral") +
+  geom_bar(stat = "identity", fill = "lightskyblue") +
   labs(title = "Salary Growth by Undergraduate Major",
        x = "Undergraduate Major",
        y = "Salary Growth (%)") +
@@ -93,7 +93,7 @@ ggplot(degrees_that_pay_back, aes(x = reorder(`Undergraduate Major`, -Salary_Gro
 
 ggsave("plots/avg_salary_growth_by_undergrad_major.png", width = 8, height = 6)
 
-# TABLE
+
 #### Average Starting Salary Table ----
 salaries_by_college$`Starting Median Salary` <- as.numeric(
   gsub("[\\$,]", "", salaries_by_college$`Starting Median Salary`)
@@ -119,34 +119,35 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
   ifelse(field_of_study_data$EARN_NE_MDN_3YR == "PS", NA, field_of_study_data$EARN_NE_MDN_3YR)
 )
 
-# filter relevant credential levels 
+# credential levels 
 filtered_field_of_study <- field_of_study_data |>
-  filter(CREDLEV %in% c(3, 5, 6))  # Numeric codes for relevant levels
+  filter(CREDLEV %in% c(3, 5, 6))  # Numeric codes for Bachelor's, Master's, Doctoral
 
-# aggregate data by credential level to calculate mean earnings
+# calculate mean earnings
 aggregated_data <- filtered_field_of_study |>
   group_by(CREDLEV) |>
   summarize(Mean_Earnings = mean(EARN_NE_MDN_3YR, na.rm = TRUE))
 
-# recode CREDLEV to use descriptive names
-aggregated_data$CREDLEV <- recode(aggregated_data$CREDLEV,
-                                  `3` = "Bachelor's Degree",
-                                  `5` = "Master's Degree",
-                                  `6` = "Doctoral Degree")
+# using descriptive names
+aggregated_data$CREDLEV <- factor(aggregated_data$CREDLEV, 
+                                  levels = c(3, 5, 6), 
+                                  labels = c("Bachelor's Degree", "Master's Degree", "Doctoral Degree"))
 
-# median earnings bar plots
-median_earnings <- ggplot(aggregated_data, aes(CREDLEV, Mean_Earnings, CREDLEV)) +
+# colors :) 
+custom_colors <- c("Bachelor's Degree" = "lightskyblue", 
+                   "Master's Degree" = "mediumturquoise", 
+                   "Doctoral Degree" = "lightslateblue")
+
+# bar plot
+ggplot(aggregated_data, aes(x = CREDLEV, y = Mean_Earnings, fill = CREDLEV)) +
   geom_bar(stat = "identity") +
+  scale_fill_manual(values = custom_colors) +
   labs(
     title = "Median Earnings by Credential Level (3 Years After Graduation)",
     x = "Credential Level",
-    y = "Median Earnings"
+    y = "Median Earnings ($)"
   ) +
-  theme_minimal() +
-  theme(legend.position = "none")  
-
-print(median_earnings)
-
+  theme_minimal() 
 
 ggsave("plots/median_earnings_by_credential.png", width = 8, height = 6)
 
@@ -212,7 +213,7 @@ major_salary_summary <- filtered_field_of_study |>
   summarize(Median_Earnings = median(EARN_NE_MDN_3YR, na.rm = TRUE)) |>
   arrange(desc(Median_Earnings))
 
-# top 30 majors for better readability
+# top 30 majors 
 top_majors <- major_salary_summary |>
   slice_head(n = 25)
 
@@ -252,7 +253,7 @@ field_of_study_data$EARN_NE_MDN_3YR <- as.numeric(
 filtered_field_of_study <- field_of_study_data |>
   filter(CREDLEV == 3, !is.na(EARN_MDN_HI_1YR), !is.na(EARN_MDN_HI_2YR), !is.na(EARN_NE_MDN_3YR))  # Filter for bachelor's degree (CREDLEV == 3)
 
-# aggregate data: median earnings by institution
+# median earnings by institution
 bachelor_institution_salary_summary <- filtered_field_of_study |>
   group_by(INSTNM) |>
   summarize(
