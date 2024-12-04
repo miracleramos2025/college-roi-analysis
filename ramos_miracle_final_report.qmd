@@ -306,18 +306,17 @@ This bar chart compares median earnings across credential levels, highlighting t
 
 #### Earnings Growth by Credential Level
 ```{r}
+#### Earnings Growth by Credential Level ----
 library(tidyverse)
+library(kableExtra)
 
-degrees_that_pay_back <- read_csv("data/degrees-that-pay-back.csv")
-salaries_by_college <- read_csv("data/salaries-by-college-type.csv")
-salaries_by_region <- read_csv("data/salaries-by-region.csv")
-
-# replace "PS" with NA and ensure numeric data
-filtered_field_of_study <- filtered_field_of_study |>
+# replace "PS" with NA 
+filtered_field_of_study <- read_csv("data/Most-Recent-Cohorts-Field-of-Study.csv") |>
   mutate(
     EARN_MDN_HI_1YR = as.numeric(ifelse(EARN_MDN_HI_1YR == "PS", NA, EARN_MDN_HI_1YR)),
     EARN_NE_MDN_3YR = as.numeric(ifelse(EARN_NE_MDN_3YR == "PS", NA, EARN_NE_MDN_3YR))
   )
+
 
 earnings_growth_credential <- filtered_field_of_study |>
   filter(CREDLEV %in% c(3, 5, 6), !is.na(EARN_MDN_HI_1YR), !is.na(EARN_NE_MDN_3YR)) |>
@@ -326,7 +325,8 @@ earnings_growth_credential <- filtered_field_of_study |>
     Median_Earnings_1YR = median(EARN_MDN_HI_1YR, na.rm = TRUE),
     Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE),
     Growth = round(((Median_Earnings_3YR - Median_Earnings_1YR) / Median_Earnings_1YR) * 100, 2)  
-  )
+  ) |>
+  ungroup()  # Ensure data is not grouped after summarization
 
 # labels for credential levels
 earnings_growth_credential <- earnings_growth_credential |>
