@@ -329,6 +329,8 @@ earnings_growth_by_institution_type <- ggplot(
   ) +
   theme_minimal()
 
+earnings_growth_by_institution_type
+
 # save plot
 ggsave("figures/earnings_growth_by_institution_type.png", width = 10, height = 7)
 
@@ -358,13 +360,3 @@ kable(
   caption = "Top Schools for Return of Investment on Bachelor's Degrees"
 ) |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-
-
-
-
-
-
-
-
-
-

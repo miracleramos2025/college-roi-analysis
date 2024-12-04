@@ -1,0 +1,15 @@
+Variable,Description,DataType
+CIPDESC,"Description of field of study (e.g., Engineering, Nursing, etc.)",Categorical
+CREDLEV,"Credential level (numeric code for bachelor's, master's, doctorate, etc.)",Numeric
+DEBT_ALL_STGP_ANY_MDN,Median debt of all students (any loan program),Numeric
+DEBT_ALL_STGP_EVAL_MDN,Median debt of all students (evaluated programs),Numeric
+EARN_MDN_HI_1YR,Median earnings 1 year after graduation (high-income students),Numeric
+EARN_MDN_HI_2YR,Median earnings 2 years after graduation (high-income students),Numeric
+EARN_NE_MDN_3YR,Median earnings 3 years after graduation (non-high-income students),Numeric
+EARN_COUNT_WNE_HI_1YR,Count of students with earnings 1 year after graduation,Numeric
+EARN_GT_THRESHOLD_1YR,Count of students earning above a threshold 1 year after graduation,Numeric
+EARN_IN_STATE_1YR,Median in-state earnings 1 year after graduation,Numeric
+EARN_MALE_NE_MDN_3YR,Median earnings of male students 3 years after graduation,Numeric
+EARN_NOMALE_NE_MDN_3YR,Median earnings of non-male students 3 years after graduation,Numeric
+EARN_PELL_NE_MDN_3YR,Median earnings of students with Pell Grants 3 years after graduation,Numeric
+EARN_NOPELL_NE_MDN_3YR,Median earnings of students without Pell Grants 3 years after graduation,Numeric
