@@ -130,23 +130,23 @@ This table shows starting salaries by school type. Ivy League schools have the h
 
 #### Earnings Growth Over Time by Institution Type
 
-![Earnings Growth Over Time by Institution Type](plots/earnings_growth_by_institution_type.png)
+![Earnings Growth Over Time by Institution Type](figures/earnings_growth_by_institution_type.png)
 This graph shows that graduates from Ivy League and engineering institutions experience the highest earnings growth over time, with Ivy League graduates surpassing 75,000 dollars in three years. Graduates from state, party, and liberal arts institutions see slower earnings growth, with median salaries remaining below 60,000 dollars after three years.
 
 #### Median Salary by Field of Study
 
-![Median Salary by Field of Study (3 Years After Graduation)](plots/median_salary_by_field_of_study.png)
+![Median Salary by Field of Study (3 Years After Graduation)](figures/median_salary_by_field_of_study.png)
 This bar chart shows the differences in median salaries across fields of study three years after graduation, highlighting trends by discipline. This graph shows that fields in health sciences, such as dental and medical residency programs, have the highest median earnings three years after graduation. Engineering and technology-related fields also offer competitive salaries but are slightly lower.
 
 #### Average Salary Growth by Undergraduate Major
 
-![Average Salary Growth by Undergraduate Major](plots/avg_salary_growth_by_undergrad_major.png)
+![Average Salary Growth by Undergraduate Major](figures/avg_salary_growth_by_undergrad_major.png)
 
 This bar chart compares salary growth for different majors. Philosophy, International Relations, and Math majors see the biggest salary increases from starting to mid-career. Nursing and Physician Assistant majors have smaller increases, likely because they start with higher salaries that don’t grow as much.
 
 #### Average Mid-Career Salary by Region
 
-![Average Mid-Career Salary by Region](plots/avg_mid_career_salary_by_region.png)
+![Average Mid-Career Salary by Region](figures/avg_mid_career_salary_by_region.png)
 
 This bar chart shows that people who graduate from schools in the Northeastern region tend to have the highest mid-career salaries. California also has good mid-career salaries. The Midwestern and Western regions have lower mid-career averages.
 
@@ -262,7 +262,7 @@ This graph shows that Harvey Mudd College offers the best return on investment (
 
 #### Median Earnings by Credential Level
 
-![Median Earnings by Credential Level (3 Years After Graduation)](plots/median_earnings_by_credential.png)
+![Median Earnings by Credential Level (3 Years After Graduation)](figures/median_earnings_by_credential.png)
 This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs. From this bar chart, it's evident that Doctorate degrees have the highest median earnings.
 
 

@@ -78,7 +78,7 @@ ggplot(salaries_by_region, aes(x = Region, y = `Mid-Career Median Salary`)) +
 degrees_that_pay_back <- degrees_that_pay_back |>
   mutate(Salary_Growth = as.numeric(gsub("%", "", `Percent change from Starting to Mid-Career Salary`)))
 
-ggsave("plots/avg_mid_career_salary_by_region.png", width = 8, height = 6)
+ggsave("figures/avg_mid_career_salary_by_region.png", width = 8, height = 6)
 
 
 #### Average Salary Growth by Undergraduate Major ----
@@ -91,7 +91,7 @@ ggplot(degrees_that_pay_back, aes(x = reorder(`Undergraduate Major`, -Salary_Gro
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_y_continuous(labels = scales::comma)
 
-ggsave("plots/avg_salary_growth_by_undergrad_major.png", width = 8, height = 6)
+ggsave("figures/avg_salary_growth_by_undergrad_major.png", width = 8, height = 6)
 
 
 #### Average Starting Salary Table ----
@@ -106,7 +106,7 @@ salaries_summary_table <- salaries_by_college |>
 
 print(salaries_summary_table)
 
-png("plots/avg_starting_salary_table.png", width = 800, height = 600)
+png("figures/avg_starting_salary_table.png", width = 800, height = 600)
 grid.table(salaries_summary_table)
 dev.off()
 
@@ -150,7 +150,7 @@ ggplot(aggregated_data, aes(x = CREDLEV, y = Mean_Earnings, fill = CREDLEV)) +
   theme_minimal() +
   theme(legend.position = "none")
 
-ggsave("plots/median_earnings_by_credential.png", width = 8, height = 6)
+ggsave("figures/median_earnings_by_credential.png", width = 8, height = 6)
 
 
 #### Median Debt vs. Median Earnings ----
@@ -241,7 +241,7 @@ median_salary_by_field_of_study <- ggplot(top_majors,
 
 print(median_salary_by_field_of_study)
 
-ggsave("plots/median_salary_by_field_of_study.png", width = 8, height = 6)
+ggsave("figures/median_salary_by_field_of_study.png", width = 8, height = 6)
 
 
 #### Top 15 Institutions by Median Salary (3 Years After Graduation) ----
@@ -330,7 +330,7 @@ earnings_growth_by_institution_type <- ggplot(
   theme_minimal()
 
 # save plot
-ggsave("plots/earnings_growth_by_institution_type.png", width = 10, height = 7)
+ggsave("figures/earnings_growth_by_institution_type.png", width = 10, height = 7)
 
 
 #### Top Schools for Return of Investment on Bachelor's Degrees ----

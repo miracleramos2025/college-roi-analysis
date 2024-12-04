@@ -73,20 +73,20 @@ Overall, the three datasets are clean and ready for analysis, with no missing da
 Plots and Table of the datasets:
 
 
-![Average Mid-Career Salary by Region](plots/avg_mid_career_salary_by_region.png)
+![Average Mid-Career Salary by Region](figures/avg_mid_career_salary_by_region.png)
 
 This bar chart shows that people who graduate from schools in the Northeastern region tend to have the highest mid-career salaries. California also has good mid-career salaries. The Midwestern and Western regions have lower mid-career averages.
 
 
 
 
-![Average Salary Growth by Undergraduate Major](plots/avg_salary_growth_by_undergrad_major.png)
+![Average Salary Growth by Undergraduate Major](figures/avg_salary_growth_by_undergrad_major.png)
 
 This bar chart compares salary growth for different majors. Philosophy, International Relations, and Math majors see the biggest salary increases from starting to mid-career. Nursing and Physician Assistant majors have smaller increases, likely because they start with higher salaries that don’t grow as much.
 
 
 
-![Average Starting Salary Table](plots/avg_starting_salary_table.png)
+![Average Starting Salary Table](figures/avg_starting_salary_table.png)
 
 This table shows starting salaries by school type. Ivy League schools have the highest starting salaries, followed by Engineering schools. Liberal Arts, Party, and State schools have lower starting salaries on average.
 
