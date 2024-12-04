@@ -418,6 +418,50 @@ ggplot(filtered_gender_salary, aes(x = reorder(CIPDESC, -Median_Earnings), y = M
 
 
 
+#### Impact of Pell Grants on Earnings ----
+
+# replace "PS" with NA in the relevant columns
+filtered_field_of_study$EARN_PELL_NE_MDN_3YR <- as.numeric(
+  ifelse(filtered_field_of_study$EARN_PELL_NE_MDN_3YR == "PS", NA, 
+         filtered_field_of_study$EARN_PELL_NE_MDN_3YR)
+)
+
+filtered_field_of_study$EARN_NOPELL_NE_MDN_3YR <- as.numeric(
+  ifelse(filtered_field_of_study$EARN_NOPELL_NE_MDN_3YR == "PS", NA, 
+         filtered_field_of_study$EARN_NOPELL_NE_MDN_3YR)
+)
+
+pell_earnings_long <- filtered_field_of_study |>
+  select(CIPDESC, EARN_PELL_NE_MDN_3YR, EARN_NOPELL_NE_MDN_3YR) |>
+  pivot_longer(
+    cols = c(EARN_PELL_NE_MDN_3YR, EARN_NOPELL_NE_MDN_3YR),
+    names_to = "Pell_Status",
+    values_to = "Median_Earnings"
+  ) |>
+  mutate(Pell_Status = ifelse(Pell_Status == "EARN_PELL_NE_MDN_3YR", "Received Pell Grant", "No Pell Grant"))
+
+# boxplot
+ggplot(pell_earnings_long, aes(x = Pell_Status, y = Median_Earnings, fill = Pell_Status)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7) +
+  scale_fill_manual(
+    values = c("Received Pell Grant" = "mediumturquoise", "No Pell Grant" = "plum1")
+  ) +
+  labs(
+    title = "Impact of Pell Grants on Earnings (3 Years After Graduation)",
+    x = "Pell Grant Status",
+    y = "Median Earnings ($)",
+    fill = "Pell Grant Status"
+  ) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(size = 12),
+    axis.title = element_text(size = 14),
+    plot.title = element_text(size = 16, face = "bold")
+  )
+
+
 
 
 

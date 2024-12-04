@@ -127,6 +127,10 @@ knitr::kable(
 
 This table shows starting salaries by school type. Ivy League schools have the highest starting salaries, followed by Engineering schools. Liberal Arts, Party, and State schools have lower starting salaries on average.
 
+#### Earnings vs. Debt by Institution Type
+
+![Earnings vs. Debt by Institution Type](figures/earnings_vs_debt_scatterplot.png)
+
 
 #### Earnings Growth Over Time by Institution Type
 
@@ -143,6 +147,39 @@ This bar chart shows the differences in median salaries across fields of study t
 ![Average Salary Growth by Undergraduate Major](figures/avg_salary_growth_by_undergrad_major.png)
 
 This bar chart compares salary growth for different majors. Philosophy, International Relations, and Math majors see the biggest salary increases from starting to mid-career. Nursing and Physician Assistant majors have smaller increases, likely because they start with higher salaries that don’t grow as much.
+
+#### Impact of Pell Grants on Earnings
+
+![Impact of Pell Grants on Earnings](figures/pell_grants_vs_earnings_boxplot.png)
+
+#### Median Salary by Gender and Field of Study
+
+![Median Salary by Gender and Field of Study](figures/med_salary_by_gender_field_of_study.png)
+
+#### Average Starting Salary by Region
+```{r}
+salaries_by_region$`Starting Median Salary` <- as.numeric(
+  gsub("[\\$,]", "", salaries_by_region$`Starting Median Salary`)
+)
+
+region_starting_salary_stats <- salaries_by_region |>
+  group_by(Region) |>
+  summarize(
+    Median_Starting_Salary = median(`Starting Median Salary`, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(Median_Starting_Salary))
+
+# table 
+kable(
+  region_starting_salary_stats,
+  col.names = c("Region", "Average Starting Salary by Region ($)"),
+  caption = "Summary of Starting Salaries by Region",
+  format = "html"
+) |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
 
 #### Average Mid-Career Salary by Region
 
@@ -262,8 +299,55 @@ This graph shows that Harvey Mudd College offers the best return on investment (
 
 #### Median Earnings by Credential Level
 
-![Median Earnings by Credential Level (3 Years After Graduation)](figures/median_earnings_by_credential.png)
+![Median Earnings by Credential Level (3 Years After Graduation](figures/median_earnings_by_credential.png)
+
 This bar chart compares median earnings across credential levels, highlighting the earning potential of higher degrees such as bachelor's, master's, and doctoral programs. From this bar chart, it's evident that Doctorate degrees have the highest median earnings.
+
+
+#### Earnings Growth by Credential Level
+```{r}
+library(tidyverse)
+
+degrees_that_pay_back <- read_csv("data/degrees-that-pay-back.csv")
+salaries_by_college <- read_csv("data/salaries-by-college-type.csv")
+salaries_by_region <- read_csv("data/salaries-by-region.csv")
+
+# replace "PS" with NA and ensure numeric data
+filtered_field_of_study <- filtered_field_of_study |>
+  mutate(
+    EARN_MDN_HI_1YR = as.numeric(ifelse(EARN_MDN_HI_1YR == "PS", NA, EARN_MDN_HI_1YR)),
+    EARN_NE_MDN_3YR = as.numeric(ifelse(EARN_NE_MDN_3YR == "PS", NA, EARN_NE_MDN_3YR))
+  )
+
+earnings_growth_credential <- filtered_field_of_study |>
+  filter(CREDLEV %in% c(3, 5, 6), !is.na(EARN_MDN_HI_1YR), !is.na(EARN_NE_MDN_3YR)) |>
+  group_by(CREDLEV) |>
+  summarize(
+    Median_Earnings_1YR = median(EARN_MDN_HI_1YR, na.rm = TRUE),
+    Median_Earnings_3YR = median(EARN_NE_MDN_3YR, na.rm = TRUE),
+    Growth = round(((Median_Earnings_3YR - Median_Earnings_1YR) / Median_Earnings_1YR) * 100, 2)  
+  )
+
+# labels for credential levels
+earnings_growth_credential <- earnings_growth_credential |>
+  mutate(CREDLEV = case_when(
+    CREDLEV == 3 ~ "Bachelor's Degree",
+    CREDLEV == 5 ~ "Master's Degree",
+    CREDLEV == 6 ~ "Doctoral Degree",
+    TRUE ~ "Other"
+  ))
+
+# table
+kable(
+  earnings_growth_credential,
+  col.names = c("Credential Level", "Median Earnings (1st Year)", "Median Earnings (3rd Year)", "Growth (%)"),
+  caption = "Earnings Growth by Credential Level (1st to 3rd Year After Graduation)",
+  format = "html"
+) |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+```
+
 
 
 
