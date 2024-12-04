@@ -78,7 +78,6 @@ ggplot(salaries_by_region, aes(x = Region, y = `Mid-Career Median Salary`)) +
 degrees_that_pay_back <- degrees_that_pay_back |>
   mutate(Salary_Growth = as.numeric(gsub("%", "", `Percent change from Starting to Mid-Career Salary`)))
 
-ggsave("figures/avg_mid_career_salary_by_region.png", width = 8, height = 6)
 
 
 #### Average Salary Growth by Undergraduate Major ----
@@ -106,11 +105,7 @@ salaries_summary_table <- salaries_by_college |>
 
 print(salaries_summary_table)
 
-png("figures/avg_starting_salary_table.png", width = 800, height = 600)
-grid.table(salaries_summary_table)
-dev.off()
 
-### Anaylsis ----
 
 #### Median Earnings by Credential Level ----
 
@@ -241,7 +236,6 @@ median_salary_by_field_of_study <- ggplot(top_majors,
 
 print(median_salary_by_field_of_study)
 
-ggsave("figures/median_salary_by_field_of_study.png", width = 8, height = 6)
 
 
 #### Top 15 Institutions by Median Salary (3 Years After Graduation) ----
@@ -360,3 +354,88 @@ kable(
   caption = "Top Schools for Return of Investment on Bachelor's Degrees"
 ) |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+
+
+#### Median Salary by Gender ----
+
+# replace "PS" with NA 
+filtered_field_of_study$EARN_MALE_NE_MDN_3YR <- as.numeric(
+  ifelse(filtered_field_of_study$EARN_MALE_NE_MDN_3YR == "PS", NA, 
+         filtered_field_of_study$EARN_MALE_NE_MDN_3YR)
+)
+
+filtered_field_of_study$EARN_NOMALE_NE_MDN_3YR <- as.numeric(
+  ifelse(filtered_field_of_study$EARN_NOMALE_NE_MDN_3YR == "PS", NA, 
+         filtered_field_of_study$EARN_NOMALE_NE_MDN_3YR)
+)
+
+gender_salary_data <- filtered_field_of_study |>
+  filter(!is.na(EARN_MALE_NE_MDN_3YR), !is.na(EARN_NOMALE_NE_MDN_3YR))
+
+gender_salary_long <- gender_salary_data |>
+  select(CIPDESC, EARN_MALE_NE_MDN_3YR, EARN_NOMALE_NE_MDN_3YR) |>
+  pivot_longer(
+    cols = c(EARN_MALE_NE_MDN_3YR, EARN_NOMALE_NE_MDN_3YR),
+    names_to = "Gender",
+    values_to = "Median_Earnings"
+  ) |>
+  mutate(Gender = ifelse(Gender == "EARN_MALE_NE_MDN_3YR", "Male", "Female"))
+
+top_fields <- gender_salary_long |>
+  group_by(CIPDESC) |>
+  summarize(Average_Earnings = mean(Median_Earnings, na.rm = TRUE)) |>
+  arrange(desc(Average_Earnings)) |>
+  slice_head(n = 10) |>
+  pull(CIPDESC)
+
+# data for the top fields only
+filtered_gender_salary <- gender_salary_long |>
+  filter(CIPDESC %in% top_fields)
+
+
+# bar plot
+ggplot(filtered_gender_salary, aes(x = reorder(CIPDESC, -Median_Earnings), y = Median_Earnings, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(
+    values = c("Male" = "royalblue3", "Female" = "plum1") 
+  ) +
+  labs(
+    title = "Median Salary by Gender and Field of Study (Top 10 Fields, 3 Years After Graduation)",
+    x = "Field of Study",
+    y = "Median Earnings ($)",
+    fill = "Gender"
+  ) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    plot.title = element_text(size = 14, face = "bold")
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
