@@ -1,5 +1,5 @@
 ---
-title: "Progress Memo 2"
+title: "Final Report"
 subtitle: |
   | Final Project 
   | Data Science 1 with R (STAT 301-1)
@@ -36,7 +36,7 @@ citation-location: margin
 :::
 
 
-## Data source
+## Introduction
 
 #### Analysis of College Salaries and Earning Potential
 
@@ -56,7 +56,7 @@ This dataset was sourced from College Scorecard, specifically the "Most Recent C
 
 - Most Recent Cohorts Field of Study: This dataset offers detailed information on student debt and earnings by field of study, making it a valuable resource for analyzing post-graduation financial outcomes.
 
-## Why this data
+#### Why this data
 
 I chose the datasets from Kaggle and College Scorecard because they offer different but related insights into education and earnings. The Kaggle dataset highlights starting and mid-career salaries, showing how majors and college types impact earnings over time. The College Scorecard dataset focuses on earnings by field of study and institution, giving a detailed look at specific programs and schools. Together, these datasets provide a well-rounded view of educational value. 
 
@@ -66,7 +66,7 @@ Key questions for this analysis include:
 - Which institutions and fields of study have the highest earnings?
 - How does the earning potential of bachelor’s degrees compare to other credentials?
 
-## Data quality & complexity check
+## Data Overiew & Quality
 
 The datasets included in this analysis are well-structured, each presenting different levels of complexity:
 
@@ -85,7 +85,7 @@ This dataset is much larger than the Kaggle datasets, with thousands of rows and
 #### Conclusion 
 Overall, the four datasets are clean and ready for analysis. The Degrees That Pay You Back dataset is straightforward and helpful for comparing salary growth. The Most Recent Cohorts Field of Study dataset is larger and more complex but provides detailed information on earnings, debt, and fields of study. Together, these datasets give a solid base to explore earnings, return on investment, and the value of higher education.
 
-## Exploratory Data Analysis
+## Explorations
 
 #### Average Starting Median Salary by Institution Type
 
@@ -267,22 +267,22 @@ This bar chart compares median earnings across credential levels, highlighting t
 
 
 
-## Potential data issues
+## Conclusion
 
-- Representativeness: The datasets should represent a wide range of colleges, majors, and regions. If certain school types or majors are underrepresented, this could lead to biased results that may not apply broadly.
-- Inflation and Time Relevance: If the salary data spans different years, it might not be adjusted for inflation, making comparisons over time less accurate.
-- Sample Size Variability: Some categories (such as certain school types or majors) might have a smaller number of observations, leading to less reliable results or potential bias in those areas.
 
-## Progress Summary
-So far, I have loaded and cleaned the datasets, making sure any missing values were addressed and numerical data was formatted correctly. I’ve started exploring the data to look at trends in earnings by school type, field of study, and degree level. I created bar charts and tables to show key insights, like which schools have the highest return on investment (ROI). I also looked at how salaries grow over time, giving a clearer picture of how education affects future earnings.
 
-## Next Steps
-Moving forward, I plan to dive deeper into demographic breakdowns for the final project.
-Future questions I want to look into include:
+## Executive Summary
 
-- How does salary differ between students who received financial aid or Pell Grants?
-- How does salary differ between gender?
-- Which majors offer the best return of investment?
-- How does ROI differ between Ivy League, liberal arts, party schools, state schools, and engineering schools?
+
+
+
+
+
+
+
+
+
+
+
 
 
