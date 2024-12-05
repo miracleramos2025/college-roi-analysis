@@ -1,29 +1,32 @@
-## Basic repo setup for final project
+# Final Project - Miracle Ramos
 
-This project focuses on analyzing college salary data to understand how different factors, 
-such as school type, region, and major, influence starting and mid-career salaries. The goal is to 
-provide insights that can guide educational and career planning by showing potential earnings outcomes 
-based on various educational choices.
+This directory contains the files and folders for my Data Science 1 with R (STAT 301-1) final project. Below is an overview of the contents:
 
-## Load the tidyverse package
-library(tidyverse)
-library(ggplot2)
-library(dplyr)
-library(gridExtra)
+## Contents
 
+1. **Code Files**  
+   - `1_univariate_analysis.R`: Script for univariate data analysis.
+   - `2_bivariate_analysis.R`: Script for bivariate data analysis.
+   - `3_multivariate_analysis.R`: Script for multivariate data analysis.
+   - `4_data_collection.R`: Script for data cleaning and collection.
 
-## Load only a small portion of the dataset to view column names
-degrees_that_pay_back <- read_csv("data/degrees-that-pay-back.csv")
-salaries_by_college <- read_csv("data/salaries-by-college-type.csv")
-salaries_by_region <- read_csv("data/salaries-by-region.csv")
+2. **Data Folder**  
+   - Located in the `data/` subdirectory. Contains raw and cleaned datasets used in the analysis. See the `data/README.md` file for details.
 
-## Display the column names
-colnames(degrees_that_pay_back)
-colnames(salaries_by_college)
-colnames(salaries_by_region)
+3. **Figures Folder**  
+   - Located in the `figures/` subdirectory. Stores all visualizations created during the project. See the `figures/README.md` file for details.
 
-## Go!
-start viewing or plotting the data!
+4. **Reports**  
+   - `ramos_miracle_final_report.qmd`: Quarto file for the final report.
+   - `ramos_miracle_final_report.html`: Rendered HTML file of the final report.
+   - Progress memos for tracking project updates.
+
+## How to Use
+
+1. Open the `ramos_miracle_final_report.qmd` file in Quarto to view or edit the report.
+2. Run the R scripts in the correct order (from data collection to multivariate analysis) to reproduce results.
+3. View visualizations in the `figures/` folder and raw data in the `data/` folder.
+
 
 
 

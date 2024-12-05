@@ -4,7 +4,7 @@ subtitle: |
   | Final Project 
   | Data Science 1 with R (STAT 301-1)
 author: "Miracle Ramos"
-pagetitle: "PM1 Miracle Ramos"
+pagetitle: "FR Miracle Ramos"
 date: today
 
 format:
@@ -190,9 +190,10 @@ This bar chart in @fig-undergrad_major compares salary growth for different majo
 <br>
 
 ##### Median Salary by Gender and Field of Study
+<div id="fig-salary-by-gender"></div>
 
-![Median Salary by Gender and Field of Study](figures/med_salary_by_gender_field_of_study.png){#fig-salary-by-gender}  
-This bar chart in @fig-salary-by-gender shows the median salaries for the top 10 fields of study three years after graduation, comparing males and females. In five fields, males earn higher median salaries, while in the other five, females earn more. This highlights how the pay gap varies across different fields of study.
+![Median Salary by Gender and Field of Study](figures/med_salary_by_gender_field_of_study.png)
+This bar chart in [Figure 5](#fig-salary-by-gender) shows the median salaries for the top 10 fields of study three years after graduation, comparing males and females. In five fields, males earn higher median salaries, while in the other five, females earn more. This highlights how the pay gap varies across different fields of study.
 <br>
 <br>
 
@@ -207,9 +208,10 @@ This box plot in @fig-pell compares median earnings three years after graduation
 <br>
 
 ##### Random Field of Study Impact of Pell Grants on Earnings
+<div id="fig-random"></div>
 
-![Random Field of Study Impact of Pell Grants on Earnings](figures/random_scatter_pell_grants_plot.png){#fig-random}
-This graph in @fig-random shows the impact of Pell Grant status on median earnings across a random selection of fields of study. Generally, students who did not receive Pell Grants tend to have slightly higher earnings compared to those who did, but the difference varies by field. The data highlights potential disparities in post-graduation income influenced by financial aid status.
+![Random Field of Study Impact of Pell Grants on Earnings](figures/random_scatter_pell_grants_plot.png)
+This graph in [Figure 7](#fig-random) shows the impact of Pell Grant status on median earnings across a random selection of fields of study. Generally, students who did not receive Pell Grants tend to have slightly higher earnings compared to those who did, but the difference varies by field. The data highlights potential disparities in post-graduation income influenced by financial aid status.
 <br>
 <br>
 
@@ -449,7 +451,7 @@ In conclusion, this report emphasizes the importance of making informed decision
 
 ##### Comment on AI
 
-ChatGPT assisted in editing my executive summary to make it clear and concise while also helping generate ideas for exploration. Additionally, ChatGPT provided guidance on filtering down the field of study data and creating meaningful graphs to highlight key findings.
+ChatGPT assisted in editing my executive summary to make it clear and concise while also helping generate graph ideas for my exploratory data analysis. Furthermore, ChatGPT provided guidance on cleaning the College Scorecard data since it was rather complex and aided in creating functions to highlight key findings.
 <br>
 <br>
 <br>
