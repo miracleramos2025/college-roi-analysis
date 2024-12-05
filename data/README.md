@@ -15,6 +15,7 @@ This folder contains the datasets used in the final project. It includes both ra
 
 4. **`Most-Recent-Cohorts-Field-of-Study.csv`**  
    - College Scorecard dataset with detailed earnings and debt data by field of study.
+   - This file is too large to display on GitHub due to `.gitignore` settings but is crucial for the analysis conducted in the project. Ensure you download it locally to replicate the results.
 
 ## Notes
 
