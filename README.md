@@ -20,6 +20,9 @@ This directory contains the files and folders for my Data Science 1 with R (STAT
    - `ramos_miracle_final_report.qmd`: Quarto file for the final report.
    - `ramos_miracle_final_report.html`: Rendered HTML file of the final report.
    - Progress memos for tracking project updates.
+   
+5. **Executive Summary** 
+   - Provides a concise overview of the project's purpose, major findings, and conclusions.
 
 ## How to Use
 

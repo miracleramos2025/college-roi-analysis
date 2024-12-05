@@ -1,0 +1,45 @@
+---
+title: "Final Report"
+subtitle: |
+  | Final Project 
+  | Data Science 1 with R (STAT 301-1)
+author: "Miracle Ramos"
+pagetitle: "FR Miracle Ramos"
+date: today
+
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    embed-resources: true
+    link-external-newwindow: true
+
+execute:
+  echo: false       
+  warning: false  
+  error: false  
+
+from: markdown+emoji
+reference-location: margin
+citation-location: margin
+---
+
+::: {.callout-tip icon="false"}
+## Github Repo Link
+
+[Miracle's GitHub Repo Link (miracleramos2025)](https://github.com/stat301-1-2024-fall/final-project-1-miracleramos2025.git)
+
+:::
+
+## Executive Summary
+
+The purpose of this report is to analyze how education choices, including degree type, field of study, institution type, and location, influence earning potential and financial outcomes after graduation. Using datasets from Kaggle and College Scorecard, this report explores key trends in starting salaries, mid-career growth, and long-term financial returns to provide valuable insights for prospective students and stakeholders in higher education.
+
+The analysis revealed that bachelor’s degree holders experience the highest percentage growth in earnings during the first three years after graduation, even though their starting salaries are lower compared to master’s and doctoral degree holders. Doctoral degrees, however, lead to the highest overall earnings three years post-graduation. Fields of study in health sciences, engineering, and technology consistently rank among the highest in median salaries, while philosophy and math majors demonstrate exceptional salary growth over time.
+
+Institution type also plays a significant role in financial outcomes. Graduates from Ivy League and engineering schools enjoy the highest starting and mid-career salaries, along with relatively low debt burdens. Meanwhile, state and liberal arts institutions show more varied results, with earnings and debt levels depending on specific programs. Regional differences highlight the importance of location, with graduates in California and the Northeastern region earning higher starting and mid-career salaries compared to those in the Midwest and South.
+
+Lastly, financial aid status also impacts earnings. Students who did not receive Pell Grants tend to earn slightly more three years after graduation than those who did, highlighting potential income disparities tied to socioeconomic status.
+
+In conclusion, this report emphasizes the importance of making informed decisions about education based on potential financial outcomes. Understanding how degree type, institution, major, and region interact can help students and policymakers navigate the complexities of higher education and its financial implications. These findings provide a strong foundation for future discussions on maximizing the return on investment in education.
