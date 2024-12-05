@@ -224,8 +224,7 @@ ggplot(filtered_gender_salary, aes(x = reorder(CIPDESC, -Median_Earnings), y = M
   scale_y_continuous(labels = scales::dollar_format()) +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-    plot.title = element_text(size = 14, face = "bold")
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10)
   )
 
 # save plot
@@ -272,8 +271,7 @@ ggplot(pell_earnings_long, aes(x = Pell_Status, y = Median_Earnings, fill = Pell
   theme(
     legend.position = "none",
     axis.text.x = element_text(size = 12),
-    axis.title = element_text(size = 14),
-    plot.title = element_text(size = 16, face = "bold")
+    axis.title = element_text(size = 14)
   )
 
 ggsave("figures/pell_grants_vs_earnings_boxplot.png", width = 8, height = 6)
@@ -324,10 +322,7 @@ ggplot(earnings_vs_debt_data, aes(x = DEBT_ALL_STGP_ANY_MDN, y = EARN_NE_MDN_3YR
   scale_y_continuous(labels = scales::dollar_format()) +
   theme_minimal() +
   theme(
-    legend.position = "bottom",
-    plot.title = element_text(size = 16, face = "bold"),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 14)
+    legend.position = "bottom"
   )
 
 ggsave("figures/earnings_vs_debt_scatterplot.png", width = 10, height = 6)
@@ -370,6 +365,40 @@ kable(
 ) |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
+#### Median Earnings by Field of Study and Pell Grant Status ----
+# randomly select 10 fields of study
+set.seed(789)  
+random_fields <- pell_earnings_long |>
+  select(CIPDESC) |>
+  distinct() |>
+  slice_sample(n = 7)
 
+filtered_pell_earnings <- pell_earnings_long |>
+  filter(CIPDESC %in% random_fields$CIPDESC)
+
+# scatterplot
+random_scatter_pell_grants_plot <- ggplot(filtered_pell_earnings, 
+                                          aes(x = CIPDESC, y = Median_Earnings, color = Pell_Status)) +
+  geom_point(size = 3, alpha = 0.7) +  # Scatter points
+  scale_color_manual(
+    values = c("Received Pell Grant" = "mediumturquoise", "No Pell Grant" = "royalblue")
+  ) +
+  labs(
+    title = "Random Field of Study Impact of Pell Grants on Earnings",
+    x = "Field of Study",
+    y = "Median Earnings ($)",
+    color = "Pell Grant Status"
+  ) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    axis.title = element_text(size = 14),
+    legend.position = "top"
+  )
+
+print(random_scatter_pell_grants_plot)
+
+ggsave("figures/random_scatter_pell_grants_plot.png", width = 10, height = 6)
 
 

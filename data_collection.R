@@ -420,6 +420,8 @@ ggplot(filtered_gender_salary, aes(x = reorder(CIPDESC, -Median_Earnings), y = M
 
 #### Impact of Pell Grants on Earnings ----
 
+#| label: fig-pell-grant
+
 # replace "PS" with NA in the relevant columns
 filtered_field_of_study$EARN_PELL_NE_MDN_3YR <- as.numeric(
   ifelse(filtered_field_of_study$EARN_PELL_NE_MDN_3YR == "PS", NA, 
@@ -460,7 +462,6 @@ ggplot(pell_earnings_long, aes(x = Pell_Status, y = Median_Earnings, fill = Pell
     axis.title = element_text(size = 14),
     plot.title = element_text(size = 16, face = "bold")
   )
-
 
 
 
