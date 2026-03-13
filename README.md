@@ -32,7 +32,7 @@ This directory contains the files and folders for my Data Science 1 with R (STAT
 
 ## Final Report
 The final report is available here:  
-[View Final Report (HTML)](https://miracleramos2025.github.io/disney-boxoffice-analysis/ramos_miracle_final_report.html)
+[View Final Report (HTML)](https://miracleramos2025.github.io/final-project-1-site/ramos_miracle_final_report.html)
 
 
 
