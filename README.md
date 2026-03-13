@@ -1,8 +1,7 @@
 # Final Project - Miracle Ramos
 
 ## Final Report
-The final report is available here:  
-[View Final Report (HTML)](https://miracleramos2025.github.io/college-roi-analysis/ramos_miracle_final_report.html)
+The final report is available here: [View Final Report (HTML)](https://miracleramos2025.github.io/college-roi-analysis/ramos_miracle_final_report.html)
 
 This directory contains the files and folders for my Data Science 1 with R (STAT 301-1) final project. Below is an overview of the contents:
 
