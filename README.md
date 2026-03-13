@@ -30,6 +30,10 @@ This directory contains the files and folders for my Data Science 1 with R (STAT
 2. Run the R scripts in the correct order (from data collection to multivariate analysis) to reproduce results.
 3. View visualizations in the `figures/` folder and raw data in the `data/` folder.
 
+## Final Report
+The final report is available here:  
+[View Final Report (HTML)](https://miracleramos2025.github.io/disney-boxoffice-analysis/ramos_miracle_final_report.html)
+
 
 
 
